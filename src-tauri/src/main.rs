@@ -20,7 +20,7 @@ fn main() {
         .add_item(CustomMenuItem::new("open", "Open"))
         .add_item(CustomMenuItem::new("exit", "Exit"));
 
-    let system_tray = SystemTray::new().with_menu(tray_menu);
+    let system_tray = SystemTray::new().with_menu(tray_menu).with_tooltip("My Assistant");
 
     tauri::Builder::default()
         .system_tray(system_tray)

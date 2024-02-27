@@ -5,6 +5,10 @@ html, body {
 	background-color: #2c3e50;
 }
 
+p {
+    margin: 0;
+}
+
 .chat-box {
   height: calc(100vh - 238px); /* subtract the space occupied by the navbar and footer */
   overflow-y: scroll;
@@ -29,24 +33,39 @@ html, body {
 }
 
 .left-side {
-  background-color: lightgray;
-  margin-right: auto;
-  margin-left: 0;
-  clear: both;
+    background-image: linear-gradient(to bottom, #52aeff 45%, #3d9cef 102%);
+    background-color: #52AEFF;
+    color: #FFFFFF;
+	margin-right: auto;
+	margin-left: 0;
+	clear: both;
 }
 
 .right-side {
-  background-color: lightgreen;
-  margin-left: auto;
-  margin-right: 0;
-  clear: both;
+    background-image: linear-gradient(to bottom, #82c261 45%, #70be46 102%);
+    background-color: #82c261;
+	color: #FFFFFF;
+	margin-left: auto;
+	margin-right: 0;
+	clear: both;
 }
 
 .ai_error {
-  background-color: lightred;
-  margin-right: auto;
-  margin-left: 0;
-  clear: both;
+	background-image: linear-gradient(to bottom, #ff8a65 45%, #f07853 102%);
+	background-color: #ff8a65;
+	color: #FFFFFF;
+	margin-right: auto;
+	margin-left: 0;
+	clear: both;
+}
+
+.card-header h3 {
+	color: #35495e;
+	font-family: 'Helvetica Neue', Arial, sans-serif;
+	font-size: 1.9em;
+	font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    letter-spacing: 0.05em;
 }
 
 .popup {

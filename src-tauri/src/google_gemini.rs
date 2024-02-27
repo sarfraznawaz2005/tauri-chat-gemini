@@ -2,6 +2,7 @@ use reqwest::{Client};
 use reqwest::header::HeaderMap;
 use serde::{Deserialize, Serialize};
 use std::env;
+use serde_json::Value;
 
 #[derive(Serialize)]
 struct Part {
@@ -42,10 +43,8 @@ pub async fn generate_content(prompt: String) -> Result<String, Box<dyn std::err
     let api_key = env::var("GEMINI_API_KEY").expect("GEMINI_API_KEY not found in environment variables");
     let url = format!("https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key={}", api_key);
 
-    // Define the preamble
     let preamble = "You are a helpful and enthusiastic assistant. Use the conversation history provided to inform your responses. If the prompt does not make sense in the context of the conversation history, use your own knowledge to provide an accurate and helpful response.\n\n";
 
-    // Prepend the preamble to the prompt
     let final_prompt = format!("{}{}", preamble, prompt);
 
     println!("Prompt sent to AI: \n\"{}\"", final_prompt);
@@ -65,16 +64,32 @@ pub async fn generate_content(prompt: String) -> Result<String, Box<dyn std::err
         .await?;
 
     if res.status().is_success() {
-        let response: ApiResponse = res.json().await?;
-        let combined_text = response.candidates.get(0).unwrap().content.parts.iter()
-            .map(|part| part.text.clone())
-            .collect::<Vec<String>>().join("\n");
+        let response_body = res.text().await?;
+        if response_body.trim().is_empty() {
+            // Handle case where response is empty
+            return Err(Box::new(std::io::Error::new(std::io::ErrorKind::Other, "No response received from the API.")));
+        }
 
-        Ok(combined_text)
+        let response: ApiResponse = serde_json::from_str(&response_body)?;
+        if let Some(candidate) = response.candidates.get(0) {
+            let combined_text = candidate.content.parts.iter()
+                .map(|part| part.text.clone())
+                .collect::<Vec<String>>().join("\n");
+
+            Ok(combined_text)
+        } else {
+            // Handle case where response is missing expected data
+            Err(Box::new(std::io::Error::new(std::io::ErrorKind::Other, "No valid response content received from the API.")))
+        }
     } else {
-        Err(Box::new(res.error_for_status().unwrap_err()))
+        // Parse the error response body
+        let error_body = res.text().await?;
+        let error_json: Value = serde_json::from_str(&error_body)?;
+        let error_message = error_json["error"]["message"].as_str().unwrap_or("Unknown error occurred").to_string();
+        Err(Box::new(std::io::Error::new(std::io::ErrorKind::Other, error_message)))
     }
 }
+
 
 
 
