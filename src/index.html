@@ -16,8 +16,9 @@
 			<div class="col-md-12" style="height:100%;">
 				<div class="card" style="height:100%;">
 					<div class="card-header row">
-						<div class="col-6">
-							<h3>My Assisant</h3>						
+						<div class="col-6" style="display:flex;">
+							<img src="./assets/logo.png" width="40" height="40" style="margin-right:1rem;" />
+							<h3>My Assisant</h3>
 						</div>					
 						<div class="col-6 offset-md-3 col-md-3 text-right">	
 							<a  type="button" onclick="window.print()" class="btn  btn-outline-info">Print</a>						
@@ -27,12 +28,9 @@
 					<div class="card-body chat-box rounded" id="chatbox"><span id="copy-popup" class="popup">Copied!</span></div>
 					<div class="card-footer">
 						<div class="form-group row">
-							<div class="col-md-10">
-								<input id="userInput" type="text" class="form-control dark-theme" placeholder="Type your message here..."  />
+							<div class="col-md-12">
+								<textarea id="userInput" rows="1" class="form-control dark-theme"></textarea>
 							</div>
-							<div class="col-md-2">
-								<input id="sendButton" type="button" value="SUBMIT" class=" form-control btn btn-success btn-block " />
-							</div>	
 						</div>
 					</div>
 				</div>
