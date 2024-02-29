@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
             
         } catch (error) {
-            createMessageBubble("Failed to get AI response. Please try again later." + error, false, true);
+            createMessageBubble("Failed to get AI response. Please try again later." + error.replace(/https:\/\/.*?\s/, ''), false, true);
         } finally {
 			removeLoadingMessage();
             userInput.disabled = false;
