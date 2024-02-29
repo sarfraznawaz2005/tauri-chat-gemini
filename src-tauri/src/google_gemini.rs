@@ -44,6 +44,8 @@ pub async fn generate_content(prompt: String) -> Result<String, Box<dyn std::err
     let url = format!("https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key={}", api_key);
 
     let preamble = "You are a helpful and enthusiastic assistant. Use the conversation history provided to inform your responses. If the prompt does not make sense in the context of the conversation history, use your own knowledge to provide an accurate and helpful response.\n\n";
+    
+    //preamble = "Given the following conversation history, generate a response for the user's last message.\n\n";
 
     let final_prompt = format!("{}{}", preamble, prompt);
 
