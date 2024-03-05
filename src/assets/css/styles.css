@@ -32,19 +32,40 @@ p {
   max-width: 85%;
 }
 
+.message code {
+	color: darkblue;
+	font-weight:bold;
+}
+
+.message pre {
+	color: #333;
+	font-weight:normal;
+	background:#eee;
+	border-radius: 10px;
+	border:2px solid #fff;
+	padding:10px;
+	margin: 10px 0;
+}
+
+.message pre code {
+	color: #333;
+	font-weight:normal;
+	background:#eee;
+}
+
 .left-side {
-    background-image: linear-gradient(to bottom, #52aeff 45%, #3d9cef 102%);
-    background-color: #52AEFF;
-    color: #FFFFFF;
+	background-image: linear-gradient(to bottom, #D3D3D3 45%, #BDBDBD 102%);
+	background-color: #D3D3D3;
+    color: #333;
 	margin-right: auto;
 	margin-left: 0;
 	clear: both;
 }
 
 .right-side {
-    background-image: linear-gradient(to bottom, #82c261 45%, #70be46 102%);
-    background-color: #82c261;
-	color: #FFFFFF;
+    background-image: linear-gradient(to bottom, #52aeff 45%, #3d9cef 102%);
+    background-color: #52AEFF;
+	color: #eee;
 	margin-left: auto;
 	margin-right: 0;
 	clear: both;
@@ -53,7 +74,7 @@ p {
 .ai_error {
 	background-image: linear-gradient(to bottom, #ff8a65 45%, #f07853 102%);
 	background-color: #ff8a65;
-	color: #FFFFFF;
+	color: #fff;
 	margin-right: auto;
 	margin-left: 0;
 	clear: both;
