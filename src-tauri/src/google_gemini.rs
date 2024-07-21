@@ -15,8 +15,14 @@ struct Content {
 }
 
 #[derive(Serialize)]
+struct GenerationConfig {
+    max_output_tokens: u32,
+}
+
+#[derive(Serialize)]
 struct RequestPayload {
     contents: Vec<Content>,
+    generation_config: GenerationConfig,
 }
 
 #[derive(Deserialize)]
@@ -41,7 +47,7 @@ struct ApiResponse {
 
 pub async fn generate_content(prompt: String) -> Result<String, Box<dyn std::error::Error>> {
     let api_key = env::var("GEMINI_API_KEY").expect("GEMINI_API_KEY not found in environment variables");
-    let url = format!("https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key={}", api_key);
+    let url = format!("https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={}", api_key);
 
     let preamble = "You are a helpful and enthusiastic assistant. Use the conversation history provided to inform your responses. If the prompt does not make sense in the context of the conversation history, use your own knowledge to provide an accurate and helpful response.\n\n";
     
@@ -53,6 +59,9 @@ pub async fn generate_content(prompt: String) -> Result<String, Box<dyn std::err
     
     let payload = RequestPayload {
         contents: vec![Content { parts: vec![Part { text: final_prompt }] }],
+        generation_config: GenerationConfig {
+            max_output_tokens: 8192,
+        },
     };
 
     let client = Client::new();
@@ -91,7 +100,3 @@ pub async fn generate_content(prompt: String) -> Result<String, Box<dyn std::err
         Err(Box::new(std::io::Error::new(std::io::ErrorKind::Other, error_message)))
     }
 }
-
-
-
-
